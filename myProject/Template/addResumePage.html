@@ -76,6 +76,7 @@
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
+            
             <label for="usertype">All User:</label>
 
                 <select id="usertype" name="all_user_name" required>
@@ -89,6 +90,14 @@
                         
 
             </select>
+
+
+            <label for="Gender">Gender:</label>
+                <select id="Gender" name="Gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
 
 
             <label for="designation">Designation:</label>

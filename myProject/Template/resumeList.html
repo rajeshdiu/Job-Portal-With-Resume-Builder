@@ -43,6 +43,8 @@
     <th>Experience_Title</th>
     <th>Contact_Number</th>
     <th>Profile_pic</th>
+    <th>Gender</th>
+    <th>Actions</th>
   </tr>
   
   {% for i in data %}
@@ -54,6 +56,14 @@
     <td>{{i.Contact_Number}}</td>
     <td>
       <img src="/{{i.Profile_pic}}" alt="" height="50px">
+    </td>
+    
+    <td>{{i.gender_type}}</td>
+
+    <td>
+      <a href=" {% url 'editResume' i.id %} ">Edit</a>
+      <a href=" {% url 'deleteResume' i.id %} ">Delete</a>
+      <a href=" {% url 'viewResume' i.id %} ">View Resume</a>
     </td>
   </tr>
   {% endfor %}
