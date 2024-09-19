@@ -9,19 +9,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',loginPage,name="loginPage" ),
     path('signupPage/',signupPage,name="signupPage" ),
-    
     path('homePage/',homePage,name="homePage" ),
-    
     path('logoutPage/',logoutPage,name="logoutPage" ),
-    path('addResumePage/',addResumePage,name="addResumePage" ),
-    
-    path('resumeList/',resumeList,name="resumeList" ),
-    
-    
-    path('viewResume/<str:myid>',viewResume,name="viewResume" ),
-    path('deleteResume/<str:myid>',deleteResume,name="deleteResume" ),
-    path('editResume/<str:myid>',editResume,name="editResume" ),
-    
-    
+    path('addSkillPage/',addSkillPage,name="addSkillPage"),
+    path('addEducation/',addEducation,name="addEducation"),
+    path('createResumePage/',createResumePage,name="createResumePage"),
+    path('profilePage/',profilePage,name="profilePage"),
+    path('addLanugage/',addLanugage,name="addLanugage"),
+    path('LanguageListbyUser/',LanguageListbyUser,name="LanguageListbyUser"),
+    path('LanguageEditbyUser/<str:myid>',LanguageEditbyUser,name="LanguageEditbyUser"),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -86,8 +86,7 @@ a:hover {
     <div class="container">
         <div class="form-container">
             <h2>Sign Up</h2>
-            <form action="" method="post">
-                
+            <form action="" method="POST">
                 {% csrf_token %}
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
@@ -97,8 +96,8 @@ a:hover {
 
                 <label for="usertype">User Type:</label>
                 <select id="usertype" name="usertype" required>
-                    <option value="Admin">Admin</option>
-                    <option value="Viewer">Viewer</option>
+                    <option value="admin">Admin</option>
+                    <option value="viewer">Viewer</option>
                 </select>
 
                 <label for="password">Password:</label>

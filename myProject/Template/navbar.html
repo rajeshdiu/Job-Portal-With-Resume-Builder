@@ -1,16 +1,26 @@
-<nav class="navbar">
-    <div class="logo">
-        <a href="#">MySite</a>
-    </div>
-    <ul class="nav-links">
-        <li><a href=" {% url 'addResumePage' %} ">Add Resume</a></li>
-        <li><a href=" {% url 'resumeList' %} ">Resume List</a></li>
-        <li><a href="#services">Services</a></li>
-        <li><a href=" {% url 'logoutPage' %} ">Logout</a></li>
-    </ul>
-    <div class="hamburger-menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </div>
-</nav>
+<ul>
+    
+    {% if request.user.usertype == 'viewer' %}
+    
+    <li><a href=" {% url 'createResumePage' %} ">Create Resume</a></li>
+    <li><a href=" {% url 'addLanugage' %} ">Add Language</a></li>
+
+    {% elif request.user.usertype == 'admin' %}
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Add</a>
+        <div class="dropdown-content">
+          <a href=" {% url 'addSkillPage' %} ">Add Skill</a>
+          <a href="#">Add Education</a>
+          <a href="#">Add Interrest</a>
+          <a href="#">Add Language</a>
+        </div>
+      </li>
+
+    {% endif %}
+      
+    <li><a href=" {% url 'logoutPage' %} ">Logout</a></li>
+    <li><a href=" {% url 'profilePage' %} ">Profile</a></li>
+    <li><a href=" {% url 'LanguageListbyUser' %} ">LanguageListbyUser</a></li>
+
+
+  </ul>
