@@ -3,7 +3,6 @@
     {% if request.user.usertype == 'viewer' %}
     
     <li><a href=" {% url 'createResumePage' %} ">Create Resume</a></li>
-    <li><a href=" {% url 'addLanugage' %} ">Add Language</a></li>
 
     {% elif request.user.usertype == 'admin' %}
     <li class="dropdown">
@@ -20,7 +19,6 @@
       
     <li><a href=" {% url 'logoutPage' %} ">Logout</a></li>
     <li><a href=" {% url 'profilePage' %} ">Profile</a></li>
-    <li><a href=" {% url 'LanguageListbyUser' %} ">LanguageListbyUser</a></li>
 
 
   </ul>

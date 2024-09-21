@@ -63,6 +63,35 @@ class IntermediateLanguageModel(models.Model):
     def __str__(self) -> str:
         return self.Language_Name
     
+
+class SkillModel(models.Model):
+    
+    
+    Skill_Level_Choices=[
+        ('beginner','Beginner'),
+        ('intermediate','Intermediate'),
+        ('expert','Expert'),
+    ]
+    user=models.ForeignKey(CustomUser,null=True,on_delete=models.CASCADE)
+    Skill_Name=models.CharField(max_length=100,null=True)
+    Skill_Level=models.CharField(choices=Skill_Level_Choices,max_length=100,null=True)
+    
+    class Meta:
+        unique_together=['user','Skill_Name']
+    
+    def __str__(self) -> str:
+        return self.user.username+ " "+ self.Skill_Name
+    
+class IntermediateSkillModel(models.Model):
+    
+    My_Skill_Name=models.CharField(max_length=100,null=True)
+    
+    def __str__(self) -> str:
+        return self.My_Skill_Name
+    
+    
+    
+    
     
     
     

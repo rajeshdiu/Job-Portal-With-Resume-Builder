@@ -18,5 +18,9 @@ urlpatterns = [
     path('addLanugage/',addLanugage,name="addLanugage"),
     path('LanguageListbyUser/',LanguageListbyUser,name="LanguageListbyUser"),
     path('LanguageEditbyUser/<str:myid>',LanguageEditbyUser,name="LanguageEditbyUser"),
+    path('addSkillPage/',addSkillPage,name="addSkillPage"),
+    path('skillListByUser/',skillListByUser,name="skillListByUser"),
+    path('skillEditByUser/<str:myid>',skillEditByUser,name="skillEditByUser"),
+    path('deleteSkillByUser/<str:myid>',deleteSkillByUser,name="deleteSkillByUser"),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

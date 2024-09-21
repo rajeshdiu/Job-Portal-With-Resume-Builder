@@ -69,30 +69,46 @@
 </head>
 <body>
     <div class="form-container">
-        <h1>Add Skill</h1>
+        <h1>Edit Skill</h1>
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <label for="usertype">Select Skill:</label>
                 <select id="usertype" name="Skill_Id" required>
-                    {% for i in All_Skill %}
-                    <option value="{{i.id}}">{{i.My_Skill_Name}}</option>
-                    {% endfor %}
-                        
 
+                    {% for i in ALL_Skill %}
+
+                    <option value="{{i.id}}"  
+
+                    {% if MY_Skill.Skill_Name == i.My_Skill_Name %}
+                    selected
+                        
+                    {% endif %}
+
+                         >{{i.My_Skill_Name}}</option>
+                         
+                    {% endfor %}
                 </select>
 
                 <label for="usertype">Skill Level::</label>
                 <select id="usertype" name="Skill_Level" required>
-                    <option value="beginner">Begineer</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="expert">Expert</option>
+
+                    
+                    {% for value,label in Proficiency_Level_Choices  %}
+                        
+                    <option value="{{value}}" 
+                    {% if  MY_Skill.Skill_Level == value %}
+                    selected
+                    {% endif %}
+                         >{{value|title}}</option>
+
+                    {% endfor %}
+                        
                 </select>
 
-                
-                <br>
-                <br>
 
+                <br>
+                <br>
 
             <button type="submit">Submit</button>
         </form>

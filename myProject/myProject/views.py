@@ -111,25 +111,21 @@ def profilePage(request):
     
     return render(request, "profilePage.html", context)
 
-
 def addLanugage(request):
-    all_lan = IntermediateLanguageModel.objects.all()
-    
     if request.user.usertype == 'viewer':
+        all_lan = IntermediateLanguageModel.objects.all()
         current_user = request.user
-        
         if request.method == 'POST':
             Language_Id = request.POST.get("Language_Id")
             Proficiency_Level = request.POST.get("Proficiency_Level")
+            MyObj = get_object_or_404(IntermediateLanguageModel, id=Language_Id)
             
-            Language_Object = get_object_or_404(IntermediateLanguageModel, id=Language_Id)
-            
-            if LanguageModel.objects.filter(user=current_user, Language_Name=Language_Object.Language_Name).exists():
+            if LanguageModel.objects.filter(user=current_user, Language_Name=MyObj.Language_Name).exists():
                 return HttpResponse("Already Exist")
             
             resume = LanguageModel(
                 user=current_user,
-                Language_Name=Language_Object.Language_Name,  
+                Language_Name=MyObj.Language_Name,  
                 Proficiency_Level=Proficiency_Level,
             )
             resume.save()
@@ -137,10 +133,7 @@ def addLanugage(request):
     context = {
         "all_lan": all_lan
     }
-    
     return render(request, "addLanugage.html", context)
-
-
 def LanguageListbyUser(request):
     
     current_user=request.user
@@ -180,3 +173,80 @@ def LanguageEditbyUser(request, myid):
     
     return render(request, "LanguageEditbyUser.html", context)
 
+def addSkillPage(request):
+    
+    if request.user.usertype == 'viewer':
+        All_Skill=IntermediateSkillModel.objects.all()
+        current_user = request.user
+        if request.method=='POST':
+            Skill_Id = request.POST.get("Skill_Id")
+            Skill_Level = request.POST.get("Skill_Level")
+            
+            MyObj = get_object_or_404(IntermediateSkillModel, id=Skill_Id)
+            
+            if SkillModel.objects.filter(user=current_user, Skill_Name=MyObj.My_Skill_Name).exists():
+                return HttpResponse("Skill Already Exist")
+            else:
+                skill = SkillModel(
+                user=current_user,
+                Skill_Name=MyObj.My_Skill_Name,  
+                Skill_Level=Skill_Level,
+            )
+                skill.save()
+        context={
+        "All_Skill":All_Skill
+    }    
+    
+    return render(request,"addSkillPage.html",context)
+
+
+def skillListByUser(request):
+    current_user=request.user
+    MY_Skill=SkillModel.objects.filter(user=current_user)
+    
+    context={
+        "MY_Skill":MY_Skill
+    }
+    
+    return render(request,"skillListByUser.html",context)
+
+def skillEditByUser(request,myid):
+    
+    MY_Skill=SkillModel.objects.get(id=myid)
+    
+    ALL_Skill= IntermediateSkillModel.objects.all()
+    
+    current_user = request.user
+    
+    if request.method=='POST':
+            Skill_Id = request.POST.get("Skill_Id")
+            Skill_Level = request.POST.get("Skill_Level")
+            
+            MyObj = get_object_or_404(IntermediateSkillModel, id=Skill_Id)
+            
+            skill = SkillModel(
+                id=myid,
+                user=current_user,
+                Skill_Name=MyObj.My_Skill_Name,  
+                Skill_Level=Skill_Level,
+            )
+            skill.save()
+            return redirect("skillListByUser")
+    
+    context={
+        "MY_Skill":MY_Skill,
+        "ALL_Skill":ALL_Skill,
+        "Proficiency_Level_Choices":SkillModel.Skill_Level_Choices
+    }
+    
+    return render(request,"skillEditByUser.html",context)
+
+
+def deleteSkillByUser(request,myid):
+    
+    
+    MY_Skill=SkillModel.objects.get(id=myid).delete()
+    
+    return redirect("skillListByUser")
+    
+    

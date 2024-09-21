@@ -61,6 +61,26 @@
         p {
             margin: 5px 0;
         }
+        a {
+            display: inline-block;
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            margin: 5px 0; /* Add some margin for spacing */
+        }
+        
+        a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+        
+        a:active {
+            transform: translateY(0); /* Reset lift effect on click */
+        }
+        
         
     </style>
 </head>
@@ -72,6 +92,15 @@
             <h1 class="profile-name">{{user.first_name}} {{user.last_name}}</h1>
             <h2 class="profile-designation">{{Information.Designation}}</h2>
         </div>
+        
+        <div class="profile-actions">
+            <a href="{% url 'addLanugage' %}">Add Language</a>
+            <a href="{% url 'addSkillPage' %}">Add Skill</a>
+            <a href="{% url 'LanguageListbyUser' %}">Language List by User</a>
+            <a href="{% url 'skillListByUser' %}">Skill list</a>
+        </div>
+        
+
         <div class="profile-info">
             <h3>Contact Information</h3>
             <p><strong>Contact Number:</strong> {{Information.contact_No}}</p>
