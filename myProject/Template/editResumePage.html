@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center">Edit Resume</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="Designation">Designation</label>
+            <input type="text" class="form-control" id="Designation" name="Designation" value="{{ Information.Designation }}" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="Age">Age</label>
+                <input type="number" class="form-control" id="Age" name="Age" value="{{ Information.Age }}" required>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Gender">Gender</label>
+                <select class="form-control" id="Gender" name="Gender" required>
+                    <option value="Male" {% if Information.Gender == 'Male' %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if Information.Gender == 'Female' %}selected{% endif %}>Female</option>
+                    <option value="Other" {% if Information.Gender == 'Other' %}selected{% endif %}>Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="Carrer_Summary">Career Summary</label>
+            <textarea class="form-control" id="Carrer_Summary" name="Carrer_Summary" rows="4">{{ Information.Carrer_Summary }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="contact_No">Contact Number</label>
+            <input type="text" class="form-control" id="contact_No" name="contact_No" value="{{ Information.contact_No }}">
+        </div>
+
+        <div class="form-group">
+            <label for="Profile_Pic">Profile Picture</label>
+            <input type="file" class="form-control-file" id="Profile_Pic" name="Profile_Pic">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Update Resume</button>
+    </form>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'profilePage' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+</div>
+
+<!-- Bootstrap CSS and JS CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Optional: Custom CSS for additional styling -->
+<style>
+    body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        color: #007BFF;
+        margin-bottom: 30px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007BFF;
+        border: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .alert {
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 576px) {
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock body %}

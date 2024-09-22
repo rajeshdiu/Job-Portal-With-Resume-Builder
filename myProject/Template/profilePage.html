@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
-
 {% block body %}
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,119 +8,153 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-            margin: 0;
-            padding: 20px;
         }
-        
-        .profile-container {
+
+        .resume-container {
             background: white;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 800px;
         }
-        
+
         .profile-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
-        
+
         .profile-pic {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             border: 3px solid #007BFF;
         }
-        
-        .profile-name {
-            margin: 10px 0 5px;
-        }
-        
-        .profile-designation {
-            color: #555;
-        }
-        
-        .profile-info, .profile-summary {
-            margin-bottom: 20px;
-        }
-        
-        h3 {
+
+        .section-title {
             border-bottom: 2px solid #007BFF;
             padding-bottom: 5px;
+            margin-top: 20px;
             color: #007BFF;
         }
-        
-        p {
+
+        .profile-info p {
             margin: 5px 0;
         }
-        a {
-            display: inline-block;
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s, transform 0.3s;
-            margin: 5px 0; /* Add some margin for spacing */
+
+        .btn {
+            margin: 5px;
         }
-        
-        a:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-            transform: translateY(-2px); /* Slight lift effect */
-        }
-        
-        a:active {
-            transform: translateY(0); /* Reset lift effect on click */
-        }
-        
-        
     </style>
 </head>
 <body>
-    <div class="profile-container">
+    <div class="container resume-container">
         <div class="profile-header">
-            <img src="/{{Information.Profile_Pic}}" alt="Profile Picture" class="profile-pic">
-            <h1 class="profile-name">{{user.username}}</h1>
-            <h1 class="profile-name">{{user.first_name}} {{user.last_name}}</h1>
-            <h2 class="profile-designation">{{Information.Designation}}</h2>
+            <img src="/{{ Information.Profile_Pic }}" alt="Profile Picture" class="profile-pic">
+            <h1 class="profile-name">{{ user.first_name }} {{ user.last_name }}</h1>
+            
+            
+            {% if request.user.usertype == 'admin' %}
+            <a href="{% url 'CreatedJob' %}" class="btn btn-outline-secondary"><b>CREATED JOB</b></a>
+            <a href="{% url 'add_job_Page' %}" class="btn btn-outline-secondary"><b>ADD JOB</b></a>                
+            {% endif %}
+
+            {% if request.user.usertype == 'viewer' %}
+            <a href="{% url 'applied_jobs_list' %}" class="btn btn-outline-secondary"><b>APPLIED JOB</b></a>      
+            {% endif %}
+                
+                
+
+            
+
+            <div class="text-center">
+            <a href="{% url 'MySettingsPage' %}" class="btn btn-outline-secondary">Settings</a>
+            <a href="{% url 'editResumePage' %}" class="btn btn-primary">Edit Profile</a>
+            <a href="{% url 'viewFullResume' %}" class="btn btn-success">View Full Resume</a>
+            </div>
+
+            
+            <h2 class="profile-designation">{{ Information.Designation }}</h2>
+            <p>{{ user.email }}</p>
+            <p><strong>Contact Number:</strong> {{ Information.contact_No }}</p>
         </div>
-        
-        <div class="profile-actions">
-            <a href="{% url 'addLanugage' %}">Add Language</a>
-            <a href="{% url 'addSkillPage' %}">Add Skill</a>
-            <a href="{% url 'LanguageListbyUser' %}">Language List by User</a>
-            <a href="{% url 'skillListByUser' %}">Skill list</a>
-        </div>
-        
 
         <div class="profile-info">
-            <h3>Contact Information</h3>
-            <p><strong>Contact Number:</strong> {{Information.contact_No}}</p>
-            <p><strong>Email:</strong> {{Information.user.email}}</p>
-            <p><strong>Age:</strong> {{Information.Age}}</p>
-            <p><strong>Gender:</strong>{{Information.Gender}}</p>
+            <h3 class="section-title">Personal Information</h3>
+            <p><strong>Age:</strong> {{ Information.Age }}</p>
+            <p><strong>Gender:</strong> {{ Information.Gender }}</p>
+
+            <h3 class="section-title">Career Summary</h3>
+            <p>{{ Information.Carrer_Summary }}</p>
+
+            <h3 class="section-title">Languages</h3>
+            <p>
+                {% for language in Languages %}
+                    {{ language.Language_Name }} ({{ language.Proficiency_Level }}){% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No languages added.
+                {% endfor %}
+            </p>
+
+            <h3 class="section-title">Skills</h3>
+            <p>
+                {% for skill in Skills %}
+                    {{ skill.Skill_Name }} ({{ skill.Skill_Level }}){% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No skills added.
+                {% endfor %}
+            </p>
+
+            <h3 class="section-title">Education</h3>
+            <ul class="list-group">
+                {% for edu in Education %}
+                    <li class="list-group-item">{{ edu.institution_name }} - {{ edu.degree }} ({{ edu.start_date }} to {{ edu.end_date }})</li>
+                {% empty %}
+                    <li class="list-group-item">No education records found.</li>
+                {% endfor %}
+            </ul>
+
+            <h3 class="section-title">Interests</h3>
+            <p>
+                {% for interest in Interests %}
+                    {{ interest.name }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No interests added.
+                {% endfor %}
+            </p>
+
+            <h3 class="section-title">Experience</h3>
+            <ul class="list-group">
+                {% for exp in Experiences %}
+                    <li class="list-group-item">{{ exp.job_title }} at {{ exp.company_name }} ({{ exp.start_date }} to {{ exp.end_date }}) - {{ exp.description }}</li>
+                {% empty %}
+                    <li class="list-group-item">No experience records found.</li>
+                {% endfor %}
+            </ul>
         </div>
-        <div class="profile-summary">
-            <h3>Career Summary</h3>
-            <p>{{Information.Carrer_Summary}}</p>
+
+        <div class="text-center">
+
+            <br>
             
-            
-                
-            <p>Language:{% for i in Language %}{{i.Language_Name}} , {% endfor %}</p>
-            
-                
+            <a href="{% url 'addLanugage' %}" class="btn btn-primary">Add Language</a>
+            <a href="{% url 'addSkillPage' %}" class="btn btn-primary">Add Skill</a>
+            <a href="{% url 'add_education' %}" class="btn btn-primary">Add Education</a>
+            <a href="{% url 'add_interest' %}" class="btn btn-primary">Add Interest</a>
+            <a href="{% url 'add_experience' %}" class="btn btn-primary">Add Experience</a>
         </div>
     </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 
-    
 {% endblock body %}
-
-    

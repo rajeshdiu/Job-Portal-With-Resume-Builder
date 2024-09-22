@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+<head>
+    <title>{{ UserInfo.first_name }} {{ UserInfo.last_name }} - Resume</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <script src="https://kit.fontawesome.com/3ef3559250.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<section class="resume">
+    <div class="resume_left">
+        <div class="r_profile_pic">
+            <img src="/{{ Information.Profile_Pic }}" alt="Profile Picture">
+        </div>
+        <div class="r_left_sub">
+            <div class="r_aboutme">
+                <h2>About Me</h2>
+                <p>{{ Information.Carrer_Summary }}</p>
+            </div>
+            <div class="r_skills">
+                <h2>Skills</h2>
+                <ul>
+                    {% for skill in Skills %}
+                    <li>
+                        <p><i class="fa-solid fa-code"></i></p>
+                        <p>{{ skill.Skill_Name }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="r_hobbies">
+                <h2>Hobbies</h2>
+                <ul>
+                    {% for interest in Interests %}
+                    <li>
+                        <p><i class="fa-solid fa-book"></i></p> <!-- You can replace the icon based on the interest -->
+                        <p>{{ interest.name }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="resume_right">
+        <div class="r_namerole">
+            <p>{{ UserInfo.first_name }}</p>
+            <p>{{ UserInfo.last_name }}</p>
+            <p class="role">{{ Information.Designation }}</p>
+        </div>
+        <div class="r_info">
+            <ul>
+                <li>
+                    <p>{{ UserInfo.email }}</p>
+                </li>
+                <li>
+                    <p>{{ Information.contact_No }}</p>
+                </li>
+            </ul>
+        </div>
+        <div class="r_right_sub">
+            <div class="r_education">
+				<h2>Education</h2>
+				<ul>
+					{% for edu in Education %}
+					<li>
+						<div class="r_ed_left">
+							<p>{{ edu.start_date }} - {{ edu.end_date }}</p>
+						</div>
+						<div class="r_ed_right">
+							<p>{{ edu.institution_name }}</p>
+							<p>{{ edu.degree }}</p>
+						</div>
+					</li>
+					{% empty %}
+					<li>No education records found.</li>
+					{% endfor %}
+				</ul>
+			</div>
+			
+            <div class="r_jobs">
+                <h2>Work Experience</h2>
+                <ul>
+                    {% for exp in Experiences %}
+                    <li>
+                        <div class="r_ed_left">
+                            <p>{{ exp.start_date }} - {{ exp.end_date }}</p>
+                        </div>
+                        <div class="r_ed_right">
+                            <p>{{ exp.job_title }} at {{ exp.company_name }}</p>
+                            <p>{{ exp.description }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

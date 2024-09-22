@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Job Experience</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/3ef3559250.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Add New Job</h1>
+        <hr>
+    
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="job_title">Job Title</label>
+                <input type="text" class="form-control" id="job_title" name="job_title" placeholder="Enter job title" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="company_name">Company Name</label>
+                <input type="text" class="form-control" id="company_name" name="company_name" placeholder="Enter company name" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" name="location" placeholder="Enter job location" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="description">Job Description</label>
+                <textarea class="form-control" id="description" name="description" rows="5" placeholder="Enter job description" required></textarea>
+            </div>
+    
+            <div class="form-group">
+                <label for="requirements">Job Requirements</label>
+                <textarea class="form-control" id="requirements" name="requirements" rows="4" placeholder="Enter job requirements" required></textarea>
+            </div>
+    
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="text" class="form-control" id="salary" name="salary" placeholder="Enter salary (optional)">
+            </div>
+    
+            <button type="submit" class="btn btn-primary">Add Job</button>
+            <a href="{% url 'CreatedJob' %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock body %}

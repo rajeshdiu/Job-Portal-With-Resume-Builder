@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Created Jobs</title>
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .job-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .job-description {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .job-details {
+            font-size: 0.9rem;
+        }
+
+        .created-by {
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .job-actions {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="text-center">Jobs Created by {{ request.user.username }}</h1>
+    <hr>
+
+    <!-- List of jobs -->
+    <div class="row">
+        <!-- Loop through jobs created by the users -->
+        {% for job in jobs %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="job-title">{{ job.job_title }}</h5>
+                    <p class="job-description">{{ job.description }}</p>
+                    <p class="job-details">
+                        <strong>Company:</strong> {{ job.company_name }}<br>
+                        <strong>Location:</strong> {{ job.location }}<br>
+                        <strong>Posted on:</strong> {{ job.posted_on|date:"F j, Y" }}
+                    </p>
+                    <p class="created-by">Created by: {{ job.user.username }}</p>
+                    <div class="job-actions">
+                        <a href="{% url 'edit_job' job.id %}" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="{% url 'delete_job' job.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No jobs created yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock body %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Job</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .job-application {
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h1 class="text-center">Apply for {{ job.job_title }}</h1>  <!-- Fix the field name to match your model -->
+        
+        <div class="job-application">
+            <h2>Job Details</h2>
+            <p><strong>Title:</strong> {{ job.job_title }}</p>  <!-- Fix model field name -->
+            <p><strong>Description:</strong> {{ job.description }}</p>
+    
+            {% if application_exists %}
+                <p class="alert alert-warning">You have already applied for this job.</p>
+                <a href="{% url 'JobFeed' %}" class="btn btn-secondary">Back to Job Feed</a>
+            {% else %}
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="resume">Upload Your Resume:</label>
+                        <input type="file" class="form-control" id="resume" name="resume" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cover_letter">Cover Letter:</label>
+                        <textarea class="form-control" id="cover_letter" name="cover_letter" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Application</button>
+                    <a href="{% url 'JobFeed' %}" class="btn btn-secondary">Back to Job Feed</a>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+    
+
+    
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+    
+{% endblock body %}
+
+
+    

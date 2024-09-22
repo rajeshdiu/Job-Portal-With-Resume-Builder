@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Education</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Add Education</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="institution_name">Institution Name</label>
+                <select id="institution_name" name="institution_name" class="form-control">
+                    {% for institute in institutes %}
+                        <option value="{{ institute.name }}" {% if institute.name == education.institution_name %}selected{% endif %}>
+                            {{ institute.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="degree_name">Degree</label>
+                <select id="degree_name" name="degree_name" class="form-control">
+                    {% for degree in degrees %}
+                        <option value="{{ degree.name }}" {% if degree.name == education.degree %}selected{% endif %}>
+                            {{ degree.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="field_of_study">Field of Study</label>
+                <select id="field_of_study" name="field_of_study" class="form-control">
+                    {% for field in fields_of_study %}
+                        <option value="{{ field.name }}" {% if field.name == education.field_of_study %}selected{% endif %}>
+                            {{ field.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" id="start_date" name="start_date" class="form-control" 
+                       value="{{ education.start_date|date:'Y-m-d' }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" id="end_date" name="end_date" class="form-control" 
+                       value="{{ education.end_date|date:'Y-m-d' }}">
+            </div>
+            
+        
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+        
+        <a href="{% url 'homePage' %}" class="btn btn-link mt-3">Back to Home</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock body %}

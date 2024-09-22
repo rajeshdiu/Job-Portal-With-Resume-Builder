@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .job-listing {
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Search Results for "{{ query }}"</h1>
+    {% if jobs %}
+        <div class="row">
+            {% for job in jobs %}
+                <div class="col-md-12">
+                    <div class="job-listing">
+                        <h2>{{ job.job_title }}</h2>
+                        <p><strong>Company Name:</strong> {{ job.company_name }}</p>
+                        <p><strong>Location:</strong> {{ job.location }}</p>
+                        <p><strong>Description:</strong> {{ job.description }}</p>
+                        <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+                        <p><strong>Salary:</strong> {{ job.salary }}</p>
+                        <a href="{% url 'apply_job' job.id %}" class="btn btn-primary">Apply</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-center">No jobs found matching your query.</p>
+    {% endif %}
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock body %}

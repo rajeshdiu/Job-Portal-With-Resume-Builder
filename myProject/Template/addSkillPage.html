@@ -75,6 +75,7 @@
 
             <label for="usertype">Select Skill:</label>
                 <select id="usertype" name="Skill_Id" required>
+                    <option >Select Skill</option>
                     {% for i in All_Skill %}
                     <option value="{{i.id}}">{{i.My_Skill_Name}}</option>
                     {% endfor %}
@@ -84,6 +85,8 @@
 
                 <label for="usertype">Skill Level::</label>
                 <select id="usertype" name="Skill_Level" required>
+                    
+                    <option >Select Proficiency Level</option>
                     <option value="beginner">Begineer</option>
                     <option value="intermediate">Intermediate</option>
                     <option value="expert">Expert</option>

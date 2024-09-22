@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Feed</title>
+    <!-- Bootstrap CDN -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .job-listing {
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+  
+    <div class="container mt-5">
+        <h1 class="text-center">Job Feed</h1>
+        {% if jobs %}
+            <div class="row">
+                {% for job in jobs %}
+                    <div class="col-md-12">
+                        <div class="job-listing">
+                            <h2>{{ job.job_title }}</h2>
+                            <p><strong>Company Name:</strong> {{ job.company_name }}</p>
+                            <p><strong>Location:</strong> {{ job.location }}</p>
+                            <p><strong>Job Description:</strong> {{ job.description }}</p>
+                            <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+                            <p><strong>Salary:</strong> {{ job.salary }}</p>
+                            <p><strong>Posted by:</strong> {{ job.user.username }}</p>
+                            <p><strong>Posted on:</strong> {{ job.posted_on }}</p>
+                            <p><strong>Last Updated on:</strong> {{ job.updated_on }}</p>
+    
+                            {% if user.is_authenticated %}
+                                {% if job.user == user %}
+                                    <a href="{% url 'edit_job' job.id %}" class="btn btn-warning">Edit</a>
+                                    <a href="{% url 'delete_job' job.id %}" class="btn btn-danger">Delete</a>
+                                {% else %}
+                                    
+                                        <a href="{% url 'apply_job' job.id %}" class="btn btn-primary">Apply</a>
+                                   
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">No jobs available at the moment.</p>
+        {% endif %}
+    </div>
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+            
+{% endblock body %}
+    
