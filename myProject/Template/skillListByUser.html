@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<h1>My Skills</h1>
+<!-- <h1>My Skills</h1>
 
 <table id="customers">
   <tr>
@@ -48,6 +48,34 @@
   <tr>
     <td>{{i.Skill_Name}}</td>
     <td>{{i.Skill_Level}}</td>
+    <td>
+        <a href=" {% url 'skillEditByUser' i.id %} ">Edit</a>
+        <a href=" {% url 'deleteSkillByUser' i.id %} ">Delete</a>
+    </td>
+
+  </tr>
+  
+  {% endfor %}
+
+</table> -->
+
+
+
+<h1>My Languages</h1>
+
+<table id="customers">
+  <tr>
+    <th>Languages Name</th>
+    <th>Proficiency</th>
+    <th>Actions</th>
+  </tr>
+  
+  {% for i in myLanguages %}
+    
+    
+  <tr>
+    <td>{{i.Language_Name}}</td>
+    <td>{{i.Proficiency_Level}}</td>
     <td>
         <a href=" {% url 'skillEditByUser' i.id %} ">Edit</a>
         <a href=" {% url 'deleteSkillByUser' i.id %} ">Delete</a>

@@ -1,10 +1,9 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from myApp.models import *
-
 from django.contrib.auth import authenticate,login,logout
-
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def loginPage(request):
     
@@ -19,7 +18,7 @@ def loginPage(request):
             login(request,user)
             return redirect("homePage")
         else:
-            return HttpResponse("User Is not valid")
+            messages.warning(request, "User Not Found")
             
            
     return render(request,"loginPage.html")
@@ -34,17 +33,28 @@ def signupPage(request):
         password=request.POST.get("password")
         confirm_password=request.POST.get("confirm_password")
         
-        if password==confirm_password:
+        if CustomUser.objects.filter(username=username).exists():
             
-            user=CustomUser.objects.create_user(
-                username=username,
-                email=email,
-                usertype=usertype,
-                password=password
-            )
-            
-            return redirect("loginPage")
+            if CustomUser.objects.filter(email=email).exists():
         
+                if password==confirm_password:
+                    
+                    user=CustomUser.objects.create_user(
+                        username=username,
+                        email=email,
+                        usertype=usertype,
+                        password=password
+                    )
+                    return redirect("loginPage")
+                else:
+                    messages.warning(request, "Password and Confrim Password Not Matched")
+                    
+            else:
+                messages.warning(request, "Email Already Exists")
+        else:
+            messages.warning(request, "Username Already Exists")
+            
+                    
     
     return render(request,"signupPage.html")
 
@@ -93,6 +103,7 @@ def createResumePage(request):
             current_user.last_name=request.POST.get("second_name")
             
             current_user.save()
+            messages.success(request, "Resume Created Successfully")
 
         return render(request,"createResumePage.html")
     else:
@@ -129,18 +140,24 @@ def addLanugage(request):
                 Proficiency_Level=Proficiency_Level,
             )
             resume.save()
+            
+            return redirect("LanguageListbyUser")
     
     context = {
         "all_lan": all_lan
     }
     return render(request, "addLanugage.html", context)
+
 def LanguageListbyUser(request):
     
     current_user=request.user
     
     myLanguage=LanguageModel.objects.filter(user=current_user)
+    mySkill=SkillModel.objects.filter(user=current_user)
+    
     context={
-        "myLanguage":myLanguage
+        "myLanguage":myLanguage,
+        "mySkill":mySkill,
     }
     
     return render(request,"LanguageListbyUser.html",context)
@@ -165,6 +182,7 @@ def LanguageEditbyUser(request, myid):
                 Proficiency_Level=Proficiency_Level,
             )
             resume.save()
+            return redirect("LanguageListbyUser")
     
     context = {
         "myLanguage": myLanguage,
@@ -193,6 +211,7 @@ def addSkillPage(request):
                 Skill_Level=Skill_Level,
             )
                 skill.save()
+                return redirect("LanguageListbyUser")
         context={
         "All_Skill":All_Skill
     }    
@@ -231,7 +250,7 @@ def skillEditByUser(request,myid):
                 Skill_Level=Skill_Level,
             )
             skill.save()
-            return redirect("skillListByUser")
+            return redirect("LanguageListbyUser")
     
     context={
         "MY_Skill":MY_Skill,
@@ -247,6 +266,6 @@ def deleteSkillByUser(request,myid):
     
     MY_Skill=SkillModel.objects.get(id=myid).delete()
     
-    return redirect("skillListByUser")
+    return redirect("LanguageListbyUser")
     
     

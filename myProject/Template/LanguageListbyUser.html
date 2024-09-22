@@ -57,6 +57,31 @@
   
   {% endfor %}
 
+
+  
+<table id="customers">
+  <tr>
+    <th>Skill Name</th>
+    <th>Skill Level</th>
+    <th>Actions</th>
+  </tr>
+  
+  <h1>My Skills</h1>
+  {% for i in mySkill %}
+    
+    
+  <tr>
+    <td>{{i.Skill_Name}}</td>
+    <td>{{i.Skill_Level}}</td>
+    <td>
+        <a href=" {% url 'LanguageEditbyUser' i.id %} ">Edit</a>
+        <a href="">Delete</a>
+    </td>
+
+  </tr>
+  
+  {% endfor %}
+
 </table>
 
 </body>

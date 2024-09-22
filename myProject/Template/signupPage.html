@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,85 +8,90 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         /* Basic reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
-.container {
-    width: 100%;
-    max-width: 400px;
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.form-container h2 {
-    margin-bottom: 20px;
-}
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
+        form {
+            display: flex;
+            flex-direction: column;
+        }
 
-label {
-    margin-bottom: 5px;
-    font-weight: bold;
-}
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
 
-input {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+        input {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-button {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-}
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
 
-button:hover {
-    background-color: #0056b3;
-}
+        button:hover {
+            background-color: #0056b3;
+        }
 
-p {
-    margin-top: 10px;
-    text-align: center;
-}
+        p {
+            margin-top: 10px;
+            text-align: center;
+        }
 
-a {
-    color: #007bff;
-    text-decoration: none;
-}
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
 
-a:hover {
-    text-decoration: underline;
-}
-
+        a:hover {
+            text-decoration: underline;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="container">
         <div class="form-container">
             <h2>Sign Up</h2>
+
+            {% include 'Includes/message.html' %}
+
             <form action="" method="POST">
                 {% csrf_token %}
                 <label for="username">Username:</label>
@@ -112,4 +118,5 @@ a:hover {
         </div>
     </div>
 </body>
+
 </html>
